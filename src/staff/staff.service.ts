@@ -1,7 +1,7 @@
 
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Staff } from './staff.entity';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class StaffService {
   constructor(
     @InjectRepository(Staff)
     private readonly staffRepository: Repository<Staff>,
-  ) {}
+  ) { }
 
   async createStaff(staff: Staff): Promise<Staff> {
     return this.staffRepository.save(staff);
@@ -17,6 +17,14 @@ export class StaffService {
 
   async getAllStaffMembers(): Promise<Staff[]> {
     return this.staffRepository.find();
+  }
+
+  async getStaffMemberByBusinessId(businessId: number): Promise<Staff[]> {
+    return this.staffRepository.find({
+      where: {
+        business: In([businessId])
+      }
+    });
   }
 
   async getStaffMemberById(id: number): Promise<Staff> {

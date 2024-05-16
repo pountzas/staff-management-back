@@ -4,10 +4,10 @@ import { Staff } from './staff.entity';
 
 @Controller('staff')
 export class StaffController {
-  constructor(private readonly staffService: StaffService) {}
+  constructor(private readonly staffService: StaffService) { }
 
   @Post()
- async create(@Body() staff: Staff) {
+  async create(@Body() staff: Staff) {
     return this.staffService.createStaff(staff);
   }
 
@@ -16,18 +16,23 @@ export class StaffController {
     return this.staffService.getAllStaffMembers();
   }
 
+  @Get('business/:businessId')
+  async findByBusinessId(@Param('businessId') businessId: number) {
+    return this.staffService.getStaffMemberByBusinessId(+businessId);
+  }
+
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: number) {
     return this.staffService.getStaffMemberById(+id);
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() staff: Staff) {
+  async update(@Param('id') id: number, @Body() staff: Staff) {
     return this.staffService.updateStaffMember(+id, staff);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: number) {
     return this.staffService.deleteStaffMember(+id);
   }
 }

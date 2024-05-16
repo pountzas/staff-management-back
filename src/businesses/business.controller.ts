@@ -4,7 +4,7 @@ import { Business } from './business.entity';
 
 @Controller('businesses')
 export class BusinessController {
-  constructor(private readonly businessService: BusinessService) {}
+  constructor(private readonly businessService: BusinessService) { }
 
   @Post()
   async create(@Body() business: Business) {
@@ -17,17 +17,17 @@ export class BusinessController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: number) {
     return this.businessService.getBusinessById(+id);
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() business: Business) {
+  async update(@Param('id') id: number, @Body() business: Business) {
     return this.businessService.updateBusiness(+id, business);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: number) {
     return this.businessService.deleteBusiness(+id);
   }
 }
