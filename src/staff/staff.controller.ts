@@ -1,14 +1,23 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { StaffService } from './staff.service';
 import { Staff } from './staff.entity';
+import { CreateStaffDto } from './create-staff.dto';
 
 @Controller('staff')
 export class StaffController {
   constructor(private readonly staffService: StaffService) { }
 
   @Post()
-  async create(@Body() staff: Staff) {
-    return this.staffService.createStaff(staff);
+  async create(@Body() staffDto: CreateStaffDto) {
+    return this.staffService.createStaff(staffDto);
   }
 
   @Get()
